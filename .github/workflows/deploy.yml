@@ -18,7 +18,7 @@ jobs:
         with:
           host: 43.204.98.97
           username: ubuntu
-          key: ${{ secrets.EC2_SECRETS }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/html
             rm -rf *
