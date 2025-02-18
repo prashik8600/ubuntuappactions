@@ -17,7 +17,8 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           # host: 127.0.0.1
-          host: 103.190.96.143
+          # host: 103.190.96.143
+          host: localhost
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
