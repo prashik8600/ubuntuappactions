@@ -16,6 +16,6 @@ jobs:
       - name: Deploy WebApp
         run: |
           cd /var/www/html
-          rm -rf *
+          sudo rm -rf *
           cp -r ~/actions-runner/_work/your-repo-name/your-repo-name/* /var/www/html/
           sudo systemctl restart nginx
