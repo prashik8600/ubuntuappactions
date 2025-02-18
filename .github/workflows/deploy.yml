@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Repository
@@ -16,7 +16,7 @@ jobs:
       - name: Deploy to Local Ubuntu Server
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: 43.204.98.97
+          host: 127.0.0.1
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
