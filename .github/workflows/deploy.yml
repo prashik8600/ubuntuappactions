@@ -16,7 +16,8 @@ jobs:
       - name: Deploy to Local Ubuntu Server
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: 127.0.0.1
+          # host: 127.0.0.1
+          host: 103.190.96.143
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
