@@ -17,5 +17,5 @@ jobs:
         run: |
           cd /var/www/html
           sudo rm -rf *
-          sudo cp -r ~/actions-runner/_work/ubuntuappactions/* /var/www/html/
+          sudo cp -r ~/actions-runner/_work/ubuntuappactions/index.html /var/www/html/
           sudo systemctl restart nginx
