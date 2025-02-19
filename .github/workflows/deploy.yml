@@ -1,21 +1,49 @@
-name: Deploy WebApp Locally
+# name: Deploy WebApp Locally
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: self-hosted  # This ensures the job runs on your Ubuntu machine directly
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+
+#       - name: Deploy WebApp
+#         run: |
+#           cd /var/www/html
+#           sudo rm -rf *
+#           sudo cp -r ~/actions-runner/_work/ubuntuappactions/ubuntuappactions/index.html /var/www/html/
+#           sudo systemctl restart nginx
+
+name: Deploy WebApp
 
 on:
   push:
     branches:
-      - main
+      - main  # Triggers on push to the main branch
 
 jobs:
   deploy:
-    runs-on: self-hosted  # This ensures the job runs on your Ubuntu machine directly
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Deploy WebApp
-        run: |
-          cd /var/www/html
-          sudo rm -rf *
-          sudo cp -r ~/actions-runner/_work/ubuntuappactions/ubuntuappactions/index.html /var/www/html/
-          sudo systemctl restart nginx
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: 13.201.18.253
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html
+            sudo rm -rf *
+            #git clone https://github.com/your-username/webapp-deployment.git .
+			      sudo cp -r ~/actions-runner/_work/ubuntuappactions/ubuntuappactions/index.html /var/www/html/
+            sudo systemctl restart nginx
