@@ -1,38 +1,23 @@
-name: Deploy to EC2
+name: Upload Website
 
 on:
   push:
     branches:
-      - main  # Trigger deployment on push to the main branch
+    - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v1
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1  # Change to your EC2 region
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1
 
-      - name: Debug SSH Connection to EC2
-        run: |
-          echo "Checking if SSH port 22 is open on EC2..."
-          nc -zv ${{ secrets.EC2_HOST }} 22 || echo "Port 22 is closed!"
-
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: 13.201.18.253
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/html
-            rm -rf *
-            git clone https://github.com/your-username/your-repo.git .
-            sudo systemctl restart nginx
+    - name: Deploy static site to S3 bucket
+      run: aws s3 sync . s3://selfhostedappactions --delete
