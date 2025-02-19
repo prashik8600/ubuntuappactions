@@ -44,6 +44,6 @@ jobs:
           script: |
             cd /var/www/html
             sudo rm -rf *
-            #git clone https://github.com/your-username/webapp-deployment.git .
-			      sudo cp -r ~/actions-runner/_work/ubuntuappactions/ubuntuappactions/index.html /var/www/html/
+            sudo cp -r ~/actions-runner/_work/ubuntuappactions/ubuntuappactions/index.html /var/www/html/
             sudo systemctl restart nginx
+
